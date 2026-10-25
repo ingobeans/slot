@@ -7,6 +7,7 @@ license.workspace = true
 
 [dependencies]
 unicode-normalization.workspace = true
+slot-retro = { path = "../slot-retro" }
 
 [target.'cfg(target_os = "linux")'.dependencies]
 libc.workspace = true

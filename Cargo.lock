@@ -1920,6 +1920,7 @@ name = "slot-store"
 version = "0.1.0"
 dependencies = [
  "libc",
+ "slot-retro",
  "tempfile",
  "unicode-normalization",
 ]

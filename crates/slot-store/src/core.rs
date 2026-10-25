@@ -1,3 +1,4 @@
+use slot_retro::PixelFormat;
 use std::collections::HashMap;
 use std::path::Path;
 
@@ -21,6 +22,13 @@ impl Core {
             Core::Mgba => "mgba",
             Core::Gpsp => "gpsp",
             Core::Fake08 => "fake08",
+        }
+    }
+
+    pub fn pixel_format(self) -> PixelFormat {
+        match self {
+            Core::Fake08 => PixelFormat::Rgb565,
+            _ => PixelFormat::Xrgb8888,
         }
     }
 

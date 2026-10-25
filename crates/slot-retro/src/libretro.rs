@@ -17,7 +17,7 @@ const VIDEO_BYTES: usize = (GBA_W * GBA_H * 4) as usize;
 static LIVE: AtomicBool = AtomicBool::new(false);
 
 #[derive(Copy, Clone, PartialEq, Eq)]
-enum PixelFormat {
+pub enum PixelFormat {
     Xrgb8888,
     Rgb565,
 }
@@ -400,16 +400,21 @@ fn cdir(path: &Path) -> Result<CString, CoreError> {
 }
 
 impl LibretroCore {
-    pub fn open(dylib: &Path) -> Result<Self, CoreError> {
+    pub fn open(dylib: &Path, pixel_format: PixelFormat) -> Result<Self, CoreError> {
         let dir = dylib.parent().unwrap_or(Path::new(".")).to_path_buf();
-        Self::open_with(dylib, &dir, &dir)
+        Self::open_with(dylib, &dir, &dir, pixel_format)
     }
 
-    pub fn open_with(dylib: &Path, system_dir: &Path, save_dir: &Path) -> Result<Self, CoreError> {
+    pub fn open_with(
+        dylib: &Path,
+        system_dir: &Path,
+        save_dir: &Path,
+        pixel_format: PixelFormat,
+    ) -> Result<Self, CoreError> {
         if LIVE.swap(true, Ordering::SeqCst) {
             return Err(CoreError::Unsupported("a core is already open".into()));
         }
-        Self::open_inner(dylib, system_dir, save_dir)
+        Self::open_inner(dylib, system_dir, save_dir, pixel_format)
             .inspect_err(|_| LIVE.store(false, Ordering::SeqCst))
     }
 
@@ -462,7 +467,12 @@ impl LibretroCore {
             .map(|s| s.to_string())
     }
 
-    fn open_inner(dylib: &Path, system_dir: &Path, save_dir: &Path) -> Result<Self, CoreError> {
+    fn open_inner(
+        dylib: &Path,
+        system_dir: &Path,
+        save_dir: &Path,
+        pixel_format: PixelFormat,
+    ) -> Result<Self, CoreError> {
         let lib = unsafe { Library::new(dylib) }.map_err(|e| CoreError::Load(e.to_string()))?;
         let api = unsafe { Api::load(&lib) }?;
         let version = unsafe { (api.api_version)() };
@@ -471,7 +481,7 @@ impl LibretroCore {
         }
         let mut host = Box::new(Host {
             video: vec![0; VIDEO_BYTES],
-            format: PixelFormat::Xrgb8888,
+            format: pixel_format,
             audio: Vec::new(),
             inputs: [0; 2],
             system_dir: cdir(system_dir)?,

@@ -83,7 +83,6 @@ pub fn open_core_for_palette(
         Box::new(MockCore::new())
     })
 }
-
 #[allow(clippy::too_many_arguments)]
 fn open_named(
     root: &Path,
@@ -101,7 +100,7 @@ fn open_named(
         if !path.exists() {
             continue;
         }
-        match LibretroCore::open_with(path, &bios, &saves) {
+        match LibretroCore::open_with(path, &bios, &saves, core.pixel_format()) {
             Ok(mut opened) => {
                 apply_core_options(
                     &mut opened,
