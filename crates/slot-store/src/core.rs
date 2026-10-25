@@ -20,7 +20,7 @@ impl Core {
         match self {
             Core::Mgba => "mgba",
             Core::Gpsp => "gpsp",
-            Core::Fake08 => "fake-08",
+            Core::Fake08 => "fake08",
         }
     }
 
@@ -40,7 +40,7 @@ impl Core {
         match s.trim().to_ascii_lowercase().as_str() {
             "mgba" => Some(Core::Mgba),
             "gpsp" => Some(Core::Gpsp),
-            "fake-08" => Some(Core::Fake08),
+            "fake08" => Some(Core::Fake08),
             _ => None,
         }
     }
