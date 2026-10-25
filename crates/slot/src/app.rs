@@ -2258,7 +2258,7 @@ impl App {
             Platform::Gba => self.state.colour_correction_gba,
             Platform::Gb => self.state.colour_correction_gb,
             Platform::Gbc => self.state.colour_correction_gbc,
-            Platform::Pico8 => self.state.colour_correction_gbc, // todo fix
+            Platform::Pico8 => false, // todo fix
         }
     }
 
@@ -3048,7 +3048,7 @@ impl App {
             Platform::Gba => (&mut self.state.shader_gba, &Shader::GBA[..]),
             Platform::Gb => (&mut self.state.shader_gb, &Shader::GB[..]),
             Platform::Gbc => (&mut self.state.shader_gbc, &Shader::GB[..]),
-            Platform::Pico8 => (&mut self.state.shader_gbc, &Shader::GB[..]), // todo fix
+            Platform::Pico8 => (&mut self.state.shader_gbc, &[Shader::Off][..]), // todo fix
         };
         *shader = shader.step(choices, right);
         let said = match *shader {
