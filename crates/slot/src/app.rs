@@ -2241,7 +2241,7 @@ impl App {
             Platform::Gba => self.state.shader_gba,
             Platform::Gb => self.state.shader_gb,
             Platform::Gbc => self.state.shader_gbc,
-            Platform::Pico8 => self.state.shader_gb, // todo fix
+            Platform::Pico8 => Shader::Off, // todo fix
         }
     }
 
