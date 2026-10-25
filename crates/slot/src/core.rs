@@ -169,6 +169,7 @@ pub fn colour_option(
                 "OFF"
             },
         )),
+        Core::Fake08 => None,
         Core::Gpsp => Some((
             "gpsp_color_correction",
             if on { "enabled" } else { "disabled" },

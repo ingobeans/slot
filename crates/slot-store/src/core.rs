@@ -10,6 +10,7 @@ pub enum Core {
     #[default]
     Mgba,
     Gpsp,
+    Fake08,
 }
 
 impl Core {
@@ -19,6 +20,7 @@ impl Core {
         match self {
             Core::Mgba => "mgba",
             Core::Gpsp => "gpsp",
+            Core::Fake08 => "fake-08",
         }
     }
 
@@ -30,6 +32,7 @@ impl Core {
         match self {
             Core::Mgba => "mGBA",
             Core::Gpsp => "gpSP",
+            Core::Fake08 => "Fake-08",
         }
     }
 
@@ -37,6 +40,7 @@ impl Core {
         match s.trim().to_ascii_lowercase().as_str() {
             "mgba" => Some(Core::Mgba),
             "gpsp" => Some(Core::Gpsp),
+            "fake-08" => Some(Core::Fake08),
             _ => None,
         }
     }
@@ -45,12 +49,14 @@ impl Core {
         match self {
             Core::Mgba => true,
             Core::Gpsp => platform == Platform::Gba,
+            Core::Fake08 => platform == Platform::Pico8,
         }
     }
 
     pub fn default_for(platform: Platform) -> Core {
         match platform {
             Platform::Gba | Platform::Gb | Platform::Gbc => Core::Mgba,
+            Platform::Pico8 => Core::Fake08,
         }
     }
 }

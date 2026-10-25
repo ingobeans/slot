@@ -64,6 +64,7 @@ pub fn scan(root: &Path) -> Result<Vec<Cart>, StoreError> {
     let mut carts = Vec::new();
     for platform in Platform::ALL {
         let dir = root.join("Games").join(platform.dir_name());
+        println!("dir: {dir:?}");
         let entries = match std::fs::read_dir(&dir) {
             Ok(d) => d,
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => continue,

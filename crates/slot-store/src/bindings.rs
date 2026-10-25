@@ -246,6 +246,7 @@ impl GameButton {
     pub fn of(platform: Platform) -> &'static [GameButton] {
         match platform {
             Platform::Gba => &GameButton::ALL,
+            Platform::Pico8 => &GameButton::ALL, // todo fix
             Platform::Gb | Platform::Gbc => &GameButton::GAME_BOY,
         }
     }
