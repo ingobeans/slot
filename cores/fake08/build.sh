@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cd target/
-git clone --recurse-submodules -j8 https://github.com/jtothebell/fake-08.git
+git clone --recurse-submodules -j8 https://github.com/ingobeans/fake-08.git
 git pull
 
 
